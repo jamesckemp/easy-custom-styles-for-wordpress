@@ -1,0 +1,76 @@
+#style_selector td {
+	padding:10px;
+}
+#textAlign_left,
+#textAlign_center,
+#textAlign_right,
+#textAlign_justify,
+#fontWeight_toggle,
+#fontStyle_toggle,
+#textDecoration_underline,
+#textDecoration_linethrough {
+	height:20px;
+	width:20px;
+	display:inline;
+	float:left;
+	margin:0 5px 0 0;
+	background-position:0 0;
+	text-indent:-9999px;
+	overflow:hidden;
+	cursor:pointer;
+}
+
+#textAlign_left { background-image:url('images/sprites/left.png'); background-repeat:none; }
+#textAlign_center { background-image:url('images/sprites/center.png'); background-repeat:none; }
+#textAlign_right { background-image:url('images/sprites/right.png'); background-repeat:none; }
+#textAlign_justify { background-image:url('images/sprites/justify.png'); background-repeat:none; }
+
+#fontWeight_toggle { background-image:url('images/sprites/bold.png'); background-repeat:none; }
+#fontStyle_toggle { background-image:url('images/sprites/italic.png'); background-repeat:none; }
+
+#textDecoration_underline { background-image:url('images/sprites/underline.png'); background-repeat:none; }
+#textDecoration_linethrough { background-image:url('images/sprites/line-through.png'); background-repeat:none; }
+
+.on {
+	background-position:right 0 !important;
+}
+
+.hider { overflow:hidden; }
+.hider input { display:none; }
+
+.info {
+	display:none;
+	position: absolute;
+	background: #fff;
+	border: 1px solid #CCC;
+	padding: 5px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	-o-border-radius: 3px;
+	border-radius: 3px;
+	left: 19px;
+	top: -6px;
+	width: 140px;
+}
+.question {
+	background:url('images/question.png') no-repeat -3px -3px;
+	display:block;
+	height:14px;
+	width:14px;
+	margin:0 5px 0 0;
+	vertical-align:middle;
+	float:left;
+	text-indent:-9999px;
+	overflow:hidden
+}
+.row_title {
+	position:relative;
+}
+
+#minor-publishing { display:none; }
+#poststuff .inside { margin:0; padding:0; }
+#poststuff .prev_div .inside { margin:10px 0; padding:0 10px; }
+
+.actions .hide-if-no-js {
+	display:none;
+}
