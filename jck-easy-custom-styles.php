@@ -15,6 +15,11 @@ Copyright 2014, James Kemp
 class JCK_Custom_Styles {
 
     /**
+     * Styles
+     */
+    public $styles = array();
+
+    /**
      * Constructor
      */
     public function __construct() {
@@ -38,20 +43,28 @@ class JCK_Custom_Styles {
 
     }
 
-    public static function getValue($key, $default = '', $id = '') {
+    /**
+     * Get value
+     *
+     * Get a specific value of a custom style
+     *
+     * @param str $key
+     * @param str|int $default
+     * @param int $id
+     * @return str|int
+     */
+    public function get_value($key, $default = '', $id = null) {
 
-        if ($id == '') {
-            global $post;
-            $jck_custom_styles = get_post_meta($post->ID, 'jck_custom_styles', true);
-        } else {
-            $jck_custom_styles = get_post_meta($id, 'jck_custom_styles', true);
-        }
+        global $post;
 
-        if (isset($jck_custom_styles[$key])) {
-            return $jck_custom_styles[$key];
-        } else {
+        $id = empty( $id ) ? $post->ID : $id;
+
+        $this->styles[ $id ] = get_post_meta( $id, 'jck_custom_styles', true );
+
+        if( !isset( $this->styles[ $id ][$key] ) )
             return $default;
-        }
+
+        return $this->styles[ $id ][$key];
 
     }
 
@@ -146,10 +159,9 @@ class JCK_Custom_Styles {
                     'name' => $jck_post->post_name
                 );
 
-                if (self::getValue('inline', '', $jck_post->ID) == 'inline') {
+                if (self::get_value('inline', '', $jck_post->ID) == 'inline') {
                     $custom_style_settings['inline'] = 'span';
-                } //self::getValue('inline') == 'inline'
-                else {
+                } else {
                     $custom_style_settings['block'] = 'p';
                 }
                 $style_formats[] = $custom_style_settings;
@@ -309,64 +321,64 @@ class JCK_Custom_Styles {
     public function compile_styles($jck_custom_styles, $id = '') {
         $current_styles = '';
 
-        if (self::getValue('fontFamily', '', $id) != "inherit") {
-            $current_styles .= (self::getValue('fontFamily', '', $id) != '') ? 'font-family:' . self::getValue('fontFamily', '', $id) . '; ' : '';
+        if (self::get_value('fontFamily', '', $id) != "inherit") {
+            $current_styles .= (self::get_value('fontFamily', '', $id) != '') ? 'font-family:' . self::get_value('fontFamily', '', $id) . '; ' : '';
         }
 
-        $current_styles .= (self::getValue('fontSize', '', $id) != '') ? 'font-size:' . self::getValue('fontSize', '', $id) . self::getValue('fontSizeMeas', '', $id) . '; ' : '';
+        $current_styles .= (self::get_value('fontSize', '', $id) != '') ? 'font-size:' . self::get_value('fontSize', '', $id) . self::get_value('fontSizeMeas', '', $id) . '; ' : '';
 
-        $current_styles .= (self::getValue('color', '', $id) != '') ? 'color:#' . self::getValue('color', '', $id) . '; ' : '';
+        $current_styles .= (self::get_value('color', '', $id) != '') ? 'color:#' . self::get_value('color', '', $id) . '; ' : '';
 
-        $current_styles .= (self::getValue('fontWeight', '', $id) != '') ? 'font-weight:' . self::getValue('fontWeight', '', $id) . '; ' : '';
+        $current_styles .= (self::get_value('fontWeight', '', $id) != '') ? 'font-weight:' . self::get_value('fontWeight', '', $id) . '; ' : '';
 
-        $current_styles .= (self::getValue('fontStyle', '', $id) != '') ? 'font-style:' . self::getValue('fontStyle', '', $id) . '; ' : '';
+        $current_styles .= (self::get_value('fontStyle', '', $id) != '') ? 'font-style:' . self::get_value('fontStyle', '', $id) . '; ' : '';
 
-        $current_styles .= (self::getValue('textDecoration', '', $id) != '') ? 'text-decoration:' . self::getValue('textDecoration', '', $id) . '; ' : '';
+        $current_styles .= (self::get_value('textDecoration', '', $id) != '') ? 'text-decoration:' . self::get_value('textDecoration', '', $id) . '; ' : '';
 
-        $current_styles .= (self::getValue('textTransform', '', $id) != '') ? 'text-transform:' . self::getValue('textTransform', '', $id) . '; ' : '';
+        $current_styles .= (self::get_value('textTransform', '', $id) != '') ? 'text-transform:' . self::get_value('textTransform', '', $id) . '; ' : '';
 
-        $current_styles .= (self::getValue('textAlign', '', $id) != '') ? 'text-align:' . self::getValue('textAlign', '', $id) . '; ' : '';
+        $current_styles .= (self::get_value('textAlign', '', $id) != '') ? 'text-align:' . self::get_value('textAlign', '', $id) . '; ' : '';
 
-        $current_styles .= (self::getValue('letterSpacing', '', $id) != '') ? 'letter-spacing:' . self::getValue('letterSpacing', '', $id) . 'px; ' : '';
+        $current_styles .= (self::get_value('letterSpacing', '', $id) != '') ? 'letter-spacing:' . self::get_value('letterSpacing', '', $id) . 'px; ' : '';
 
-        $current_styles .= (self::getValue('wordSpacing', '', $id) != '') ? 'word-spacing:' . self::getValue('wordSpacing', '', $id) . 'px; ' : '';
+        $current_styles .= (self::get_value('wordSpacing', '', $id) != '') ? 'word-spacing:' . self::get_value('wordSpacing', '', $id) . 'px; ' : '';
 
-        $current_styles .= (self::getValue('lineHeight', '', $id) != '') ? 'line-height:' . self::getValue('lineHeight', '', $id) . self::getValue('lineHeightMeas', '', $id) . '; ' : '';
+        $current_styles .= (self::get_value('lineHeight', '', $id) != '') ? 'line-height:' . self::get_value('lineHeight', '', $id) . self::get_value('lineHeightMeas', '', $id) . '; ' : '';
 
-        $current_styles .= (self::getValue('backgroundColor', '', $id) != '') ? 'background-color:#' . self::getValue('backgroundColor', '', $id) . '; ' : '';
+        $current_styles .= (self::get_value('backgroundColor', '', $id) != '') ? 'background-color:#' . self::get_value('backgroundColor', '', $id) . '; ' : '';
 
-        if (self::getValue('margin_ind', '', $id) == 'margin_ind') {
-            $current_styles .= (self::getValue('margin-top', '', $id) != '') ? 'margin-top:' . self::getValue('margin-top', '', $id) . 'px; ' : '';
-            $current_styles .= (self::getValue('margin-right', '', $id) != '') ? 'margin-right:' . self::getValue('margin-right', '', $id) . 'px; ' : '';
-            $current_styles .= (self::getValue('margin-bottom', '', $id) != '') ? 'margin-bottom:' . self::getValue('margin-bottom', '', $id) . 'px; ' : '';
-            $current_styles .= (self::getValue('margin-left', '', $id) != '') ? 'margin-left:' . self::getValue('margin-left', '', $id) . 'px; ' : '';
-        } //self::getValue('margin_ind','',$id) == 'margin_ind'
+        if (self::get_value('margin_ind', '', $id) == 'margin_ind') {
+            $current_styles .= (self::get_value('margin-top', '', $id) != '') ? 'margin-top:' . self::get_value('margin-top', '', $id) . 'px; ' : '';
+            $current_styles .= (self::get_value('margin-right', '', $id) != '') ? 'margin-right:' . self::get_value('margin-right', '', $id) . 'px; ' : '';
+            $current_styles .= (self::get_value('margin-bottom', '', $id) != '') ? 'margin-bottom:' . self::get_value('margin-bottom', '', $id) . 'px; ' : '';
+            $current_styles .= (self::get_value('margin-left', '', $id) != '') ? 'margin-left:' . self::get_value('margin-left', '', $id) . 'px; ' : '';
+        } //self::get_value('margin_ind','',$id) == 'margin_ind'
         else {
-            $current_styles .= (self::getValue('margin', '', $id) != '') ? 'margin:' . self::getValue('margin', '', $id) . 'px; ' : '';
+            $current_styles .= (self::get_value('margin', '', $id) != '') ? 'margin:' . self::get_value('margin', '', $id) . 'px; ' : '';
         }
 
-        if (self::getValue('padding_ind', '', $id) == 'padding_ind') {
-            $current_styles .= (self::getValue('padding-top', '', $id) != '') ? 'padding-top:' . self::getValue('padding-top', '', $id) . 'px; ' : '';
-            $current_styles .= (self::getValue('padding-right', '', $id) != '') ? 'padding-right:' . self::getValue('padding-right', '', $id) . 'px; ' : '';
-            $current_styles .= (self::getValue('padding-bottom', '', $id) != '') ? 'padding-bottom:' . self::getValue('padding-bottom', '', $id) . 'px; ' : '';
-            $current_styles .= (self::getValue('padding-left', '', $id) != '') ? 'padding-left:' . self::getValue('padding-left', '', $id) . 'px; ' : '';
-        } //self::getValue('padding_ind','',$id) == 'padding_ind'
+        if (self::get_value('padding_ind', '', $id) == 'padding_ind') {
+            $current_styles .= (self::get_value('padding-top', '', $id) != '') ? 'padding-top:' . self::get_value('padding-top', '', $id) . 'px; ' : '';
+            $current_styles .= (self::get_value('padding-right', '', $id) != '') ? 'padding-right:' . self::get_value('padding-right', '', $id) . 'px; ' : '';
+            $current_styles .= (self::get_value('padding-bottom', '', $id) != '') ? 'padding-bottom:' . self::get_value('padding-bottom', '', $id) . 'px; ' : '';
+            $current_styles .= (self::get_value('padding-left', '', $id) != '') ? 'padding-left:' . self::get_value('padding-left', '', $id) . 'px; ' : '';
+        } //self::get_value('padding_ind','',$id) == 'padding_ind'
         else {
-            $current_styles .= (self::getValue('padding', '', $id) != '') ? 'padding:' . self::getValue('padding', '', $id) . 'px; ' : '';
+            $current_styles .= (self::get_value('padding', '', $id) != '') ? 'padding:' . self::get_value('padding', '', $id) . 'px; ' : '';
         }
 
-        $current_styles .= (self::getValue('borderStyle', '', $id) != '') ? 'border-style:' . self::getValue('borderStyle', '', $id) . '; ' : '';
+        $current_styles .= (self::get_value('borderStyle', '', $id) != '') ? 'border-style:' . self::get_value('borderStyle', '', $id) . '; ' : '';
 
-        $current_styles .= (self::getValue('borderColor', '', $id) != '') ? 'border-color:#' . self::getValue('borderColor', '', $id) . '; ' : '';
+        $current_styles .= (self::get_value('borderColor', '', $id) != '') ? 'border-color:#' . self::get_value('borderColor', '', $id) . '; ' : '';
 
-        if (self::getValue('border_ind', '', $id) == 'border_ind') {
-            $current_styles .= (self::getValue('border-top-width', '', $id) != '') ? 'border-top-width:' . self::getValue('border-top-width', '', $id) . 'px; ' : 'border-top-width:0px; ';
-            $current_styles .= (self::getValue('border-right-width', '', $id) != '') ? 'border-right-width:' . self::getValue('border-right-width', '', $id) . 'px; ' : 'border-right-width:0px; ';
-            $current_styles .= (self::getValue('border-bottom-width', '', $id) != '') ? 'border-bottom-width:' . self::getValue('border-bottom-width', '', $id) . 'px; ' : 'border-bottom-width:0px; ';
-            $current_styles .= (self::getValue('border-left-width', '', $id) != '') ? 'border-left-width:' . self::getValue('border-left-width', '', $id) . 'px; ' : 'border-left-width:0px; ';
-        } //self::getValue('border_ind','',$id) == 'border_ind'
+        if (self::get_value('border_ind', '', $id) == 'border_ind') {
+            $current_styles .= (self::get_value('border-top-width', '', $id) != '') ? 'border-top-width:' . self::get_value('border-top-width', '', $id) . 'px; ' : 'border-top-width:0px; ';
+            $current_styles .= (self::get_value('border-right-width', '', $id) != '') ? 'border-right-width:' . self::get_value('border-right-width', '', $id) . 'px; ' : 'border-right-width:0px; ';
+            $current_styles .= (self::get_value('border-bottom-width', '', $id) != '') ? 'border-bottom-width:' . self::get_value('border-bottom-width', '', $id) . 'px; ' : 'border-bottom-width:0px; ';
+            $current_styles .= (self::get_value('border-left-width', '', $id) != '') ? 'border-left-width:' . self::get_value('border-left-width', '', $id) . 'px; ' : 'border-left-width:0px; ';
+        } //self::get_value('border_ind','',$id) == 'border_ind'
         else {
-            $current_styles .= (self::getValue('border-width', '', $id) != '') ? 'border-width:' . self::getValue('border-width', '', $id) . 'px; ' : 'border-width:0px; ';
+            $current_styles .= (self::get_value('border-width', '', $id) != '') ? 'border-width:' . self::get_value('border-width', '', $id) . 'px; ' : 'border-width:0px; ';
         }
 
         return $current_styles;
