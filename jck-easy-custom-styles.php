@@ -59,7 +59,7 @@ class JCK_Custom_Styles {
 
         $id = empty( $id ) ? $post->ID : $id;
 
-        $this->styles[ $id ] = get_post_meta( $id, 'jck_custom_styles', true );
+        $this->styles[ $id ] = isset( $this->styles[ $id ] ) ? $this->styles[ $id ] : get_post_meta( $id, 'jck_custom_styles', true );
 
         if( !isset( $this->styles[ $id ][$key] ) )
             return $default;
