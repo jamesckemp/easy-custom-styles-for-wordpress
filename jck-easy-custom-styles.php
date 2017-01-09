@@ -4,7 +4,7 @@
 Plugin Name: Easy Custom Styles
 Plugin URI: http://www.jckemp.com
 Description: Easily add any number of custom text styles to the WYSIWYG editor.
-Version: 1.0.2
+Version: 1.2.0
 Author: James Kemp
 Author URI: http://www.jckemp.com
 License: GPL2
